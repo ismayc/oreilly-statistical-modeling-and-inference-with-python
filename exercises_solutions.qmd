@@ -5,6 +5,13 @@ format: html
 engine: knitr
 ---
 
+```{r setup, include=FALSE}
+# Set global chunk options
+knitr::opts_chunk$set(
+  warning = FALSE
+)
+```
+
 ```{python}
 #| include: false
 import pandas as pd
@@ -43,4 +50,735 @@ from sklearn.metrics import mean_squared_error, r2_score
 spotify_sample = pd.read_csv("spotify_sample.csv")
 ```
 
-### Perform regression analysis and checks
+### Prepare data
+
+```{python}
+# Select a single feature and target variable
+X = spotify_sample[['acousticness']]
+y = spotify_sample['energy']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2024)
+```
+
+### Train and use the model
+
+```{python}
+# Create and train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error: {mse}")
+print(f"R^2 Score: {r2}")
+
+plt.clf()
+
+# Plotting the results
+plt.scatter(X_test, y_test, color='blue', label='Actual')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Predicted')
+plt.xlabel('Acousticness')
+plt.ylabel('Energy')
+plt.title('Actual vs Predicted Energy')
+plt.legend()
+plt.show()
+```
+
+### Check if assumptions of linear regression met with visual tools
+
+```{python}
+# Check for Homoscedasticity
+residuals = y_test - y_pred
+plt.figure(figsize=(10, 6))
+plt.scatter(y_pred, residuals)
+plt.axhline(y=0, color='r', linestyle='--')
+plt.xlabel('Predicted Values')
+plt.ylabel('Residuals')
+plt.title('Residuals vs Predicted Values')
+plt.show()
+
+# Check for Normality of Residuals
+plt.figure(figsize=(10, 6))
+sns.histplot(residuals, kde=True)
+plt.xlabel('Residuals')
+plt.title('Histogram of Residuals')
+plt.show()
+
+sm.qqplot(residuals, line='s')
+plt.title('Q-Q Plot of Residuals')
+plt.show()
+```
+
+## Exercise 1.1: Getting Started
+
+### Setting Up the Python Environment
+
+If you ran the `# Importing libraries and aliasing them` code above, you should 
+be good to proceed here. If not, scroll up and run it.
+
+### Load a dataset
+
+```{python}
+# Load in the dataset
+imdb_movie_sample = pd.read_csv("imdb_movie_sample.csv")
+```
+
+### Prepare data
+
+```{python}
+# Select a single feature and target variable
+X = imdb_movie_sample[['votes']]
+y = imdb_movie_sample['rating']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=2024)
+```
+
+### Train and use the model
+
+```{python}
+# Create and train the model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions
+y_pred = model.predict(X_test)
+
+# Evaluate the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error: {mse}")
+print(f"R^2 Score: {r2}")
+
+# Plotting the results
+plt.figure(figsize=(10, 6))
+plt.scatter(X_test, y_test, color='blue', label='Actual')
+plt.plot(X_test, y_pred, color='red', linewidth=2, label='Predicted')
+plt.xlabel('Votes')
+plt.ylabel('Rating')
+plt.title('Actual vs Predicted Rating')
+plt.legend()
+plt.show()
+```
+
+### Check if assumptions of linear regression met with visual tools
+
+```{python}
+# Check for Homoscedasticity
+residuals = y_test - y_pred
+plt.figure(figsize=(10, 6))
+plt.scatter(y_pred, residuals)
+plt.axhline(y=0, color='r', linestyle='--')
+plt.xlabel('Predicted Values')
+plt.ylabel('Residuals')
+plt.title('Residuals vs Predicted Values')
+plt.show()
+
+# Check for Normality of Residuals
+plt.figure(figsize=(10, 6))
+sns.histplot(residuals, kde=True)
+plt.xlabel('Residuals')
+plt.title('Histogram of Residuals')
+plt.show()
+
+sm.qqplot(residuals, line='s')
+plt.title('Q-Q Plot of Residuals')
+plt.show()
+```
+
+## Walkthrough 1.2: Correlation
+
+### Correlation matrix
+
+```{python}
+# Select only numeric columns
+numeric_columns = spotify_sample.select_dtypes(include=[np.number])
+
+# Calculate Pearson correlation matrix
+correlation_matrix = numeric_columns.corr()
+
+# Display the correlation matrix
+correlation_matrix
+```
+
+### Visualizing correlation matrix
+
+```{python}
+# Visualize the correlation matrix using a heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Correlation Matrix Heatmap')
+plt.show()
+```
+
+### Visualizing relationships
+
+```{python}
+# Plot pairplot to visualize relationships
+sns.pairplot(numeric_columns[['danceability', 'energy', 'loudness', 'valence', 'popularity']])
+plt.suptitle('Pair Plot of Selected Features', y=1)
+plt.show()
+```
+
+## Exercise 1.2: Correlation
+
+### Correlation matrix
+
+```{python}
+# Select only numeric columns
+numeric_columns = imdb_movie_sample.select_dtypes(include=[np.number])
+
+# Calculate Pearson correlation matrix
+correlation_matrix = numeric_columns.corr()
+
+# Display the correlation matrix
+correlation_matrix
+```
+
+## Visualizing correlation matrix
+
+```{python}
+# Visualize the correlation matrix using a heatmap
+plt.figure(figsize=(12, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Correlation Matrix Heatmap')
+plt.show()
+```
+
+### Visualizing relationships
+
+```{python}
+# Plot pairplot to visualize relationships of 
+# runtime_in_minutes, rating, votes, and gross_in_dollars
+sns.pairplot(numeric_columns[['runtime_in_minutes', 'rating', 'votes', 'gross_in_dollars']])
+plt.suptitle('Pair Plot of Selected Features', y=1)
+plt.show()
+```
+
+
+## Walkthrough 1.3: Multiple Regression
+
+```{python}
+# Prepare the data for multiple regression
+X = spotify_sample[['danceability', 'energy', 'loudness']]
+y = spotify_sample['popularity']
+
+# Add a constant to the predictor variable set
+X = sm.add_constant(X)
+
+# Fit the multiple regression model
+model = sm.OLS(y, X).fit()
+
+# Print the model summary
+model.summary()
+```
+
+## Exercise 1.3: Multiple Regression
+
+```{python}
+# Prepare the data for multiple regression choosing runtime_in_minutes, votes, 
+# and gross_in_dollars as predictors and rating as the target variable
+X = imdb_movie_sample[['runtime_in_minutes', 'votes', 'gross_in_dollars']]
+y = imdb_movie_sample['rating']
+
+# Add a constant to the predictor variable set
+X = sm.add_constant(X)
+
+# Fit the multiple regression model
+model = sm.OLS(y, X).fit()
+
+# Print the model summary
+model.summary()
+```
+
+## Walkthrough 1.4: Logistic Regression
+
+```{python}
+# Define the predictors and response
+X = spotify_sample[['danceability', 'energy', 'loudness']]
+y = (spotify_sample['popularity'] > 75).astype(int)  # Binary outcome
+
+# Add a constant to the model (intercept)
+X = sm.add_constant(X)
+
+# Fit the logistic regression model
+model = sm.Logit(y, X).fit()
+
+# Print the summary
+model.summary()
+
+# Predict probabilities
+spotify_sample['predicted_prob'] = model.predict(X)
+
+# Plot the predicted probabilities
+plt.figure(figsize=(10, 6))
+sns.histplot(spotify_sample['predicted_prob'], bins=20, kde=True)
+plt.title('Predicted Probabilities of High Popularity')
+plt.xlabel('Predicted Probability')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+
+## Exercise 1.4: Logistic Regression
+
+```{python}
+# Define the predictors (runtime_in_minutes & votes) and response (rating > 7)
+X = imdb_movie_sample[['runtime_in_minutes', 'votes']]
+y = (imdb_movie_sample['rating'] > 7).astype(int)  # Binary outcome
+
+# Add a constant to the model (intercept)
+X = sm.add_constant(X)
+
+# Fit the logistic regression model
+model = sm.Logit(y, X).fit()
+
+# Print the summary
+model.summary()
+
+# Predict probabilities
+imdb_movie_sample['predicted_prob'] = model.predict(X)
+
+# Plot the predicted probabilities
+plt.figure(figsize=(10, 6))
+sns.histplot(imdb_movie_sample['predicted_prob'], bins=20, kde=True)
+plt.title('Predicted Probabilities of High Rating')
+plt.xlabel('Predicted Probability')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+## Walkthrough 1.5: ANOVA
+
+### One-way ANOVA
+
+```{python}
+from statsmodels.formula.api import ols
+
+# Choose some genres to compare
+genres = ['pop', 'rock', 'hip-hop', 'jazz']
+
+# Subset the data to focus only on these genres
+spotify_sample_subset = spotify_sample[spotify_sample['track_genre'].isin(genres)]
+
+# Perform one-way ANOVA analyzing energy across different genres
+model = ols('energy ~ C(track_genre)', data=spotify_sample_subset).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+anova_table
+```
+
+### Boxplot across groups
+
+```{python}
+# Boxplot for visualization
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='track_genre', y='energy', data=spotify_sample_subset)
+plt.title('Energy Levels Across Different Genres')
+plt.xlabel('Track Genre')
+plt.ylabel('Energy')
+plt.xticks(rotation=90)
+# Adjust layout to prevent labels from being cut off
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+```
+
+### Two-way ANOVA
+
+```{python}
+# Perform two-way ANOVA analyzing energy across genres and explicit content
+model = ols('energy ~ C(track_genre) * C(explicit)', data=spotify_sample_subset).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+print(anova_table)
+```
+
+### Boxplot across groups with color added
+
+```{python}
+# Boxplot for visualization
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='track_genre', y='energy', hue='key', data=spotify_sample_subset)
+plt.title('Energy Levels Across Genres and Explicit Content')
+plt.xlabel('Track Genre')
+plt.ylabel('Energy')
+plt.xticks(rotation=90)
+plt.legend(title='Explicit')
+plt.tight_layout()
+plt.show()
+```
+
+## Exercise 1.5: ANOVA
+
+### One-way ANOVA
+
+```{python}
+# Choose some genres to compare ('Action', 'Crime', 'Horror', 'Romance')
+movie_genres = ['Action', 'Crime', 'Horror', 'Romance']
+
+# Subset the data to focus only on these genres
+imdb_movie_sample_subset = imdb_movie_sample[imdb_movie_sample['genre'].isin(movie_genres)]
+
+# Perform one-way ANOVA analyzing rating across different genres
+model = ols('rating ~ C(genre)', data=imdb_movie_sample_subset).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+print(anova_table)
+```
+
+### Boxplot across groups
+
+```{python}
+# Boxplot for visualization
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='genre', y='rating', data=imdb_movie_sample_subset)
+plt.title('Movie Ratings Across Different Genres')
+plt.xlabel('Genre')
+plt.ylabel('Rating')
+plt.xticks(rotation=90)
+plt.tight_layout()
+plt.show()
+```
+
+### Two-way ANOVA
+
+```{python}
+# Perform two-way ANOVA analyzing rating across genres and decades
+model = ols('rating ~ C(genre) * C(decade)', data=imdb_movie_sample_subset).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+print(anova_table)
+```
+
+### Boxplot across groups with color added
+
+```{python}
+# Some customization here to get the decades to appear in the appropriate order
+
+# Define the ordered categories
+decades = ['1940s', '1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s']
+
+# Convert 'decade' column to a categorical type with ordered categories
+imdb_movie_sample_subset['decade'] = pd.Categorical(imdb_movie_sample_subset['decade'], categories=decades, ordered=True)
+
+# Boxplot for visualization
+plt.figure(figsize=(12, 6))
+sns.boxplot(x='genre', y='rating', hue='decade', data=imdb_movie_sample_subset)
+plt.title('Movie Ratings Across Genres and Decades')
+plt.xlabel('Genre')
+plt.ylabel('Rating')
+plt.xticks(rotation=90)
+plt.legend(title='Decade')
+plt.tight_layout()
+plt.show()
+```
+
+## Walkthrough 2.1: Kruskal-Wallis and Mann-Whitney U Tests
+
+### Kruskal-Wallis
+
+```{python}
+import scipy.stats as stats
+
+# Perform Kruskal-Wallis Test on 'danceability' grouped by 'track_genre'
+grouped_data = [group["danceability"].values for name, group in spotify_sample.groupby("track_genre")]
+stat, p_value = stats.kruskal(*grouped_data)
+print(f"Kruskal-Wallis Test Statistic: {stat}")
+print(f"P-value: {p_value}")
+```
+
+### Mann-Whitney U
+
+```{python}
+# Perform Mann-Whitney U Test on 'energy' for pop versus rock
+group1 = spotify_sample[spotify_sample["track_genre"] == "pop"]["energy"]
+group2 = spotify_sample[spotify_sample["track_genre"] == "rock"]["energy"]
+stat, p_value = stats.mannwhitneyu(group1, group2)
+print(f"Mann-Whitney U Test Statistic: {stat}")
+print(f"P-value: {p_value}")
+```
+
+## Exercise 2.1: Kruskal-Wallis and Mann-Whitney U Tests
+
+### Kruskal-Wallis
+
+```{python}
+# Perform Kruskal-Wallis Test on 'rating' grouped by 'decade'
+grouped_data = [group["rating"].values for name, group in imdb_movie_sample.groupby("decade")]
+stat, p_value = stats.kruskal(*grouped_data)
+print(f"Kruskal-Wallis Test Statistic: {stat}")
+print(f"P-value: {p_value}")
+```
+
+### Mann-Whitney U
+
+```{python}
+# Perform Mann-Whitney U Test on 'gross_in_dollars' for 1990s versus 2000s
+group1 = imdb_movie_sample[imdb_movie_sample["decade"] == "1990s"]["gross_in_dollars"]
+group2 = imdb_movie_sample[imdb_movie_sample["decade"] == "2000s"]["gross_in_dollars"]
+stat, p_value = stats.mannwhitneyu(group1, group2)
+print(f"Mann-Whitney U Test Statistic: {stat}")
+print(f"P-value: {p_value}")
+```
+
+## Walkthrough 2.2: Correlation and Regression Non-parametrics
+
+### Spearman's Rank Correlation
+
+```{python}
+from scipy.stats import spearmanr, kendalltau
+from sklearn.linear_model import TheilSenRegressor
+
+# Filter numeric columns
+numeric_columns = spotify_sample.select_dtypes(include=[np.number])
+
+# Calculate Spearman's rank correlation matrix
+spearman_corr = numeric_columns.corr(method='spearman')
+spearman_corr
+
+# Heatmap for Spearman's rank correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', linewidths=0.5, fmt=".2f")
+plt.title('Spearman Rank Correlation Matrix')
+plt.show()
+```
+
+### Kendall's Tau Correlation
+
+```{python}
+# Calculate Kendall's tau correlation matrix
+kendall_corr = numeric_columns.corr(method='kendall')
+kendall_corr
+
+# Heatmap for Kendall's tau correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(kendall_corr, annot=True, cmap='coolwarm', linewidths=0.5, fmt=".2f")
+plt.title('Kendall Tau Correlation Matrix')
+plt.show()
+```
+
+### Theil-Sen Robust Regression
+
+```{python}
+# Theil-Sen robust regression for 'danceability' and 'energy' predicting 'popularity'
+X = numeric_columns[['danceability', 'energy']]
+y = numeric_columns['popularity']
+theil_sen = TheilSenRegressor()
+theil_sen.fit(X, y)
+print("Intercept:", theil_sen.intercept_)
+print("Coefficients:", theil_sen.coef_)
+```
+
+
+## Exercise 2.2: Correlation and Regression Non-parametrics
+
+### Spearman's Rank Correlation
+
+```{python}
+# Filter numeric columns
+numeric_columns = imdb_movie_sample.select_dtypes(include=[np.number])
+
+# Calculate Spearman's rank correlation matrix
+spearman_corr = numeric_columns.corr(method='spearman')
+print(spearman_corr)
+
+# Heatmap for Spearman's rank correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Spearman Rank Correlation Matrix')
+plt.show()
+```
+
+### Kendall's Tau Correlation
+
+```{python}
+# Calculate Kendall's tau correlation matrix
+kendall_corr = numeric_columns.corr(method='kendall')
+print(kendall_corr)
+
+# Heatmap for Kendall's tau correlation matrix
+plt.figure(figsize=(10, 8))
+sns.heatmap(kendall_corr, annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title('Kendall Tau Correlation Matrix')
+plt.show()
+```
+
+### Theil-Sen Robust Regression
+
+```{python}
+# Theil-Sen robust regression for 'votes' and 'runtime_in_minutes' predicting 'rating'
+X = numeric_columns[['votes', 'runtime_in_minutes']]
+y = numeric_columns['rating']
+theil_sen = TheilSenRegressor()
+theil_sen.fit(X, y)
+print("Intercept:", theil_sen.intercept_)
+print("Coefficients:", theil_sen.coef_)
+```
+
+## Walkthrough 2.3: Bootstrapping
+
+```{python}
+# Function to perform bootstrapping
+def bootstrap(data, n_bootstrap_samples=1000):
+    bootstrap_samples = []
+    for _ in range(n_bootstrap_samples):
+        resample = data.sample(frac=1, replace=True)
+        bootstrap_samples.append(resample.mean())
+    return bootstrap_samples
+
+# Perform bootstrapping on the 'energy' column
+bootstrap_means = bootstrap(spotify_sample['energy'])
+
+# Plot the distribution of bootstrap means
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.title('Distribution of Bootstrap Means for Energy')
+plt.xlabel('Mean Energy')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+
+## Exercise 2.3: Bootstrapping
+
+```{python}
+# Perform bootstrapping on the 'runtime_in_minutes' column
+# using the bootstrap function defined above
+bootstrap_means = bootstrap(imdb_movie_sample['runtime_in_minutes'])
+
+# Plot the distribution of bootstrap means
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.title('Distribution of Bootstrap Means for Runtime')
+plt.xlabel('Mean Runtime (minutes)')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+
+## Walkthrough 2.4: Confidence Intervals
+
+```{python}
+# Function to calculate bootstrap confidence intervals
+def bootstrap_confidence_interval(data, n_bootstrap_samples=1000, confidence_level=0.95):
+    bootstrap_samples = []
+    for _ in range(n_bootstrap_samples):
+        resample = data.sample(frac=1, replace=True)
+        bootstrap_samples.append(resample.mean())
+    lower_bound = np.percentile(bootstrap_samples, (1 - confidence_level) / 2 * 100)
+    upper_bound = np.percentile(bootstrap_samples, (1 + confidence_level) / 2 * 100)
+    return lower_bound, upper_bound
+
+# Calculate confidence intervals for the 'energy' column
+lower, upper = bootstrap_confidence_interval(spotify_sample['energy'])
+print(f"95% Confidence Interval for Mean Energy: [{lower}, {upper}]")
+
+# Plot the distribution of bootstrap means and confidence interval
+bootstrap_means = [spotify_sample['energy'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.axvline(lower, color='r', linestyle='--')
+plt.axvline(upper, color='r', linestyle='--')
+plt.title('Bootstrap Means and 95% Confidence Interval for Energy')
+plt.xlabel('Mean Energy')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+## Exercise 2.4: Confidence Intervals
+
+```{python}
+# Calculate confidence intervals for the 'rating' column using the
+# bootstrap_confidence_interval function defined above
+lower, upper = bootstrap_confidence_interval(imdb_movie_sample['rating'])
+print(f"95% Confidence Interval for Mean Rating: [{lower}, {upper}]")
+
+# Plot the distribution of bootstrap means and confidence interval
+bootstrap_means = [imdb_movie_sample['rating'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.axvline(lower, color='r', linestyle='--')
+plt.axvline(upper, color='r', linestyle='--')
+plt.title('Bootstrap Means and 95% Confidence Interval for Rating')
+plt.xlabel('Mean Rating')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+
+## Walkthrough 2.5: Real-World Scenarios for Bootstrapping
+
+**Music Industry Analytics**
+
+*Objective*: Analyzing song popularity and estimating population mean popularity.
+
+*Scenario*: You are a data scientist for a movie production company. Your role is to analyze movie ratings and predict the average rating of movies produced. By using bootstrapping techniques, you aim to estimate the mean movie rating and its variability to understand the unknown population mean.
+
+*Bootstrapping Applications*:
+
+- *Estimating Average Popularity*: Use bootstrapping to calculate the mean and confidence intervals of the popularity scores.
+- *Assessing Variability*: Determine the variability in the means of song popularity.
+
+```{python}
+# Calculate bootstrap statistics for the 'popularity' column
+
+# Function to calculate bootstrap statistics
+def bootstrap_statistics(data, n_bootstrap_samples=1000):
+    bootstrap_means = []
+    for _ in range(n_bootstrap_samples):
+        resample = data.sample(frac=1, replace=True)
+        bootstrap_means.append(resample.mean())
+    return np.mean(bootstrap_means), np.std(bootstrap_means)
+
+mean_popularity, std_popularity = bootstrap_statistics(spotify_sample['popularity'])
+print(f"Bootstrapped Mean Popularity: {mean_popularity}")
+print(f"Bootstrapped Std Dev Popularity: {std_popularity}")
+
+# Plot the distribution of bootstrap means
+bootstrap_means = [spotify_sample['popularity'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.axvline(mean_popularity, color='r', linestyle='--')
+plt.title('Bootstrap Means for Popularity')
+plt.xlabel('Mean Popularity')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+
+## Exercise 2.5: Real-World Scenarios for Bootstrapping
+
+**Film Industry Insights**
+
+*Objective*: Evaluating movie gross revenue and estimating population mean gross revenue.
+
+*Scenario*: You are a data scientist for a movie production company. Your role is to analyze movie gross revenue and predict the average gross revenue of movies produced. By using bootstrapping techniques, you aim to estimate the mean gross revenue and its variability to understand the unknown population mean.
+
+*Bootstrapping Applications*:
+
+- *Estimating Average Gross Revenue*: Use bootstrapping to calculate the mean and confidence intervals of movie gross revenue.
+- *Assessing Variability*: Determine the variability in the means of movie gross revenue.
+
+```{python}
+# Calculate bootstrap statistics for the 'gross_in_dollars' column
+# using the function called bootstrap_statistics defined above
+mean_gross, std_gross = bootstrap_statistics(imdb_movie_sample['gross_in_dollars'])
+print(f"Bootstrapped Mean Gross Revenue: {mean_gross}")
+print(f"Bootstrapped Std Dev Gross Revenue: {std_gross}")
+
+# Plot the distribution of bootstrap means
+bootstrap_means = [imdb_movie_sample['gross_in_dollars'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+plt.figure(figsize=(10, 6))
+plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
+plt.axvline(mean_gross, color='r', linestyle='--')
+plt.title('Bootstrap Means for Gross Revenue')
+plt.xlabel('Mean Gross Revenue')
+plt.ylabel('Frequency')
+plt.show()
+```
+
