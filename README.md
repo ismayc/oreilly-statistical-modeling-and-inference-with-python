@@ -8,7 +8,7 @@ The major files in this repository are
 - `spotify_sample.csv`: Data for code walkthroughs
 - `imdb_movie_sample.csv`: Data for student exercises.
 - `exercises.ipynb`: A Jupyter Notebook with pseudocode/instructions provide to be filled in for code walkthroughs and student exercises
-- `exercises_solutions.ipynb`: A Jupyter Notebook with answers to the code walkthroughs and exercises. An HTML version of these solutions is available at https://ismay-oreilly-dap.netlify.app/exercises_solutions.html and is the recommended way to view solutions.
+- `exercises_solutions.ipynb`: A Jupyter Notebook with answers to the code walkthroughs and exercises. 
 
 ## Recommended instructions on getting set up with Python and Jupyter Notebook
 
