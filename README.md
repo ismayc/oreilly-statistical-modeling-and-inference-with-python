@@ -4,13 +4,19 @@
 # Course content
 
 The major files in this repository are
-- `slides_2024-08.pdf`: PDF version of the slides used in this course to motivate the code.
+- `slides_2025-04.pdf`: PDF version of the slides used in this course to motivate the code.
 - `spotify_sample.csv`: Data for code walkthroughs
 - `imdb_movie_sample.csv`: Data for student exercises.
 - `exercises.ipynb`: A Jupyter Notebook with pseudocode/instructions provide to be filled in for code walkthroughs and student exercises
 - `exercises_solutions.ipynb`: A Jupyter Notebook with answers to the code walkthroughs and exercises. 
 
 ## Recommended instructions on getting set up with Python and Jupyter Notebook
+
+If you aren't able to do this on your machine, you may want to check out [Google Colab](https://colab.research.google.com/). 
+It's a free service that allows you to run Jupyter notebooks in the cloud. 
+Alternatively, I've set up some temporary notebooks on Binder
+[here](https://mybinder.org/v2/gh/ismayc/oreilly-statistical-modeling-and-inference-with-python/HEAD?urlpath=%2Fdoc%2Ftree%2Fexercises.ipynb) 
+that you can work with online as well.
 
 ### Step 1: Install Python
 - **Option 1: Anaconda Installation**:
