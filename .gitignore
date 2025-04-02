@@ -9,3 +9,4 @@ data/
 renv/
 renv.lock
 mc-quarto/
+requirements.txt
