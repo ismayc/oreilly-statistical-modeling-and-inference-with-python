@@ -87,7 +87,7 @@ plt.xlabel('Acousticness')
 plt.ylabel('Energy')
 plt.title('Actual vs Predicted Energy')
 plt.legend()
-plt.show()
+plt.show();
 ```
 
 ### Check if assumptions of linear regression met with visual tools
@@ -101,18 +101,18 @@ plt.axhline(y=0, color='r', linestyle='--')
 plt.xlabel('Predicted Values')
 plt.ylabel('Residuals')
 plt.title('Residuals vs Predicted Values')
-plt.show()
+plt.show();
 
 # Check for Normality of Residuals
 plt.figure(figsize=(10, 6))
 sns.histplot(residuals, kde=True)
 plt.xlabel('Residuals')
 plt.title('Histogram of Residuals')
-plt.show()
+plt.show();
 
 sm.qqplot(residuals, line='s')
 plt.title('Q-Q Plot of Residuals')
-plt.show()
+plt.show();
 ```
 
 ## Exercise 1.1: Getting Started
@@ -165,7 +165,7 @@ plt.xlabel('Votes')
 plt.ylabel('Rating')
 plt.title('Actual vs Predicted Rating')
 plt.legend()
-plt.show()
+plt.show();
 ```
 
 ### Check if assumptions of linear regression met with visual tools
@@ -179,14 +179,14 @@ plt.axhline(y=0, color='r', linestyle='--')
 plt.xlabel('Predicted Values')
 plt.ylabel('Residuals')
 plt.title('Residuals vs Predicted Values')
-plt.show()
+plt.show();
 
 # Check for Normality of Residuals
 plt.figure(figsize=(10, 6))
 sns.histplot(residuals, kde=True)
 plt.xlabel('Residuals')
 plt.title('Histogram of Residuals')
-plt.show()
+plt.show();
 
 sm.qqplot(residuals, line='s')
 plt.title('Q-Q Plot of Residuals')
@@ -215,16 +215,16 @@ correlation_matrix
 plt.figure(figsize=(12, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Correlation Matrix Heatmap')
-plt.show()
+plt.show();
 ```
 
 ### Visualizing relationships
 
 ```{python}
 # Plot pairplot to visualize relationships
-sns.pairplot(numeric_columns[['danceability', 'energy', 'loudness', 'valence', 'popularity']])
+sns.pairplot(numeric_columns[['danceability', 'energy', 'loudness', 'valence', 'popularity']]);
 plt.suptitle('Pair Plot of Selected Features', y=1)
-plt.show()
+plt.show();
 ```
 
 ## Exercise 1.2: Correlation
@@ -257,9 +257,9 @@ plt.show()
 ```{python}
 # Plot pairplot to visualize relationships of 
 # runtime_in_minutes, rating, votes, and gross_in_dollars
-sns.pairplot(numeric_columns[['runtime_in_minutes', 'rating', 'votes', 'gross_in_dollars']])
+sns.pairplot(numeric_columns[['runtime_in_minutes', 'rating', 'votes', 'gross_in_dollars']]);
 plt.suptitle('Pair Plot of Selected Features', y=1)
-plt.show()
+plt.show();
 ```
 
 
@@ -323,7 +323,7 @@ sns.histplot(spotify_sample['predicted_prob'], bins=20, kde=True)
 plt.title('Predicted Probabilities of High Popularity')
 plt.xlabel('Predicted Probability')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 
@@ -352,7 +352,7 @@ sns.histplot(imdb_movie_sample['predicted_prob'], bins=20, kde=True)
 plt.title('Predicted Probabilities of High Rating')
 plt.xlabel('Predicted Probability')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 ## Walkthrough 1.5: ANOVA
@@ -383,12 +383,12 @@ sns.boxplot(x='track_genre', y='energy', data=spotify_sample_subset)
 plt.title('Energy Levels Across Different Genres')
 plt.xlabel('Track Genre')
 plt.ylabel('Energy')
-plt.xticks(rotation=90)
+plt.xticks(rotation=90);
 # Adjust layout to prevent labels from being cut off
 plt.tight_layout()
 
 # Show the plot
-plt.show()
+plt.show();
 ```
 
 ### Two-way ANOVA
@@ -405,14 +405,14 @@ print(anova_table)
 ```{python}
 # Boxplot for visualization
 plt.figure(figsize=(12, 6))
-sns.boxplot(x='track_genre', y='energy', hue='key', data=spotify_sample_subset)
+sns.boxplot(x='track_genre', y='energy', hue='explicit', data=spotify_sample_subset)
 plt.title('Energy Levels Across Genres and Explicit Content')
 plt.xlabel('Track Genre')
 plt.ylabel('Energy')
 plt.xticks(rotation=90)
 plt.legend(title='Explicit')
 plt.tight_layout()
-plt.show()
+plt.show();
 ```
 
 ## Exercise 1.5: ANOVA
@@ -441,9 +441,9 @@ sns.boxplot(x='genre', y='rating', data=imdb_movie_sample_subset)
 plt.title('Movie Ratings Across Different Genres')
 plt.xlabel('Genre')
 plt.ylabel('Rating')
-plt.xticks(rotation=90)
+plt.xticks(rotation=90);
 plt.tight_layout()
-plt.show()
+plt.show();
 ```
 
 ### Two-way ANOVA
@@ -472,10 +472,10 @@ sns.boxplot(x='genre', y='rating', hue='decade', data=imdb_movie_sample_subset)
 plt.title('Movie Ratings Across Genres and Decades')
 plt.xlabel('Genre')
 plt.ylabel('Rating')
-plt.xticks(rotation=90)
+plt.xticks(rotation=90);
 plt.legend(title='Decade')
 plt.tight_layout()
-plt.show()
+plt.show();
 ```
 
 ## Walkthrough 2.1: Kruskal-Wallis and Mann-Whitney U Tests
@@ -545,7 +545,7 @@ spearman_corr
 plt.figure(figsize=(10, 8))
 sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', linewidths=0.5, fmt=".2f")
 plt.title('Spearman Rank Correlation Matrix')
-plt.show()
+plt.show();
 ```
 
 ### Kendall's Tau Correlation
@@ -559,7 +559,7 @@ kendall_corr
 plt.figure(figsize=(10, 8))
 sns.heatmap(kendall_corr, annot=True, cmap='coolwarm', linewidths=0.5, fmt=".2f")
 plt.title('Kendall Tau Correlation Matrix')
-plt.show()
+plt.show();
 ```
 
 ### Theil-Sen Robust Regression
@@ -591,7 +591,7 @@ print(spearman_corr)
 plt.figure(figsize=(10, 8))
 sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Spearman Rank Correlation Matrix')
-plt.show()
+plt.show();
 ```
 
 ### Kendall's Tau Correlation
@@ -605,7 +605,7 @@ print(kendall_corr)
 plt.figure(figsize=(10, 8))
 sns.heatmap(kendall_corr, annot=True, cmap='coolwarm', linewidths=0.5)
 plt.title('Kendall Tau Correlation Matrix')
-plt.show()
+plt.show();
 ```
 
 ### Theil-Sen Robust Regression
@@ -640,7 +640,7 @@ plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.title('Distribution of Bootstrap Means for Energy')
 plt.xlabel('Mean Energy')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 
@@ -657,7 +657,7 @@ plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.title('Distribution of Bootstrap Means for Runtime')
 plt.xlabel('Mean Runtime (minutes)')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 
@@ -687,7 +687,7 @@ plt.axvline(upper, color='r', linestyle='--')
 plt.title('Bootstrap Means and 95% Confidence Interval for Energy')
 plt.xlabel('Mean Energy')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 ## Exercise 2.4: Confidence Intervals
@@ -707,7 +707,7 @@ plt.axvline(upper, color='r', linestyle='--')
 plt.title('Bootstrap Means and 95% Confidence Interval for Rating')
 plt.xlabel('Mean Rating')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 
@@ -747,7 +747,7 @@ plt.axvline(mean_popularity, color='r', linestyle='--')
 plt.title('Bootstrap Means for Popularity')
 plt.xlabel('Mean Popularity')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 
 
@@ -779,6 +779,6 @@ plt.axvline(mean_gross, color='r', linestyle='--')
 plt.title('Bootstrap Means for Gross Revenue')
 plt.xlabel('Mean Gross Revenue')
 plt.ylabel('Frequency')
-plt.show()
+plt.show();
 ```
 

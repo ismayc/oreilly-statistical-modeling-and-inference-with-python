@@ -1,0 +1,44 @@
+---
+title: "Logistic regression"
+format: html
+---
+
+### 🧮 **Step-by-Step: From Predictors to Probabilities**
+
+1. **Linear Combination (Log-Odds Calculation)**  
+   First, the model computes a weighted sum of the predictors:
+   $$
+   z = \beta_0 + \beta_1 \cdot \text{runtime\_in\_minutes} + \beta_2 \cdot \text{votes}
+   $$
+   This `z` is the **log-odds** of the outcome (rating > 7).
+
+2. **Convert Log-Odds to Odds**  
+   $$
+   \text{odds} = e^z
+   $$
+
+3. **Convert Odds to Probability**  
+   Finally, use the logistic function:
+   $$
+   \text{probability} = \frac{1}{1 + e^{-z}}
+   $$
+   This squashes the value into the \([0, 1]\) range, giving a **predicted probability** that `rating > 7`.
+
+---
+
+### 📦 **In Python with your model**
+Once you fit your model, you can get predicted probabilities with:
+
+```python
+predicted_probs = logistic_model.predict(X)  # returns probability that rating > 7
+```
+
+Each value in `predicted_probs` is a number between 0 and 1, representing the model’s estimated **probability that a movie’s rating > 7**, given its runtime and number of votes.
+
+---
+
+### ✅ **Summary**
+
+- The logistic regression **predicts log-odds** using a linear model.
+- Then it **converts those log-odds to probabilities** using the logistic (sigmoid) function.
+- These probabilities are what we use for classification decisions (e.g., predicting 1 if prob > 0.5).
