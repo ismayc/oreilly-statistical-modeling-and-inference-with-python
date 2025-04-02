@@ -8,5 +8,12 @@ data/
 *.Rproj
 renv/
 renv.lock
-mc-quarto/
 requirements.txt
+mc-quarto/answers_files/
+mc-quarto/answers.html
+mc-quarto/answers.qmd
+mc-quarto/convert-answers-to-quarto.R
+mc-quarto/extract-questions.R
+mc-quarto/main.md
+mc-quarto/md-to-quarto.R
+mc-quarto/archive/

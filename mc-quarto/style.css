@@ -1,0 +1,20 @@
+.reveal {
+  max-width: 1600px; /* This controls the entire slide container width */
+  margin: 0 auto;
+}
+
+.reveal .slides {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Each slide is a section inside .slides */
+.reveal .slides section {
+  max-height: 90vh;
+  width: 100%;
+  max-width: 1400px;     /* Increase this value for wider slides */
+  margin: 0 auto;
+  padding: 1em 2em;
+  overflow-y: auto;      /* Ensure scrolling works */
+  box-sizing: border-box;
+}
