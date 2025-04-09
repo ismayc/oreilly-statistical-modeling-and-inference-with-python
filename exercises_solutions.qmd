@@ -1,7 +1,10 @@
 ---
 title: "Walkthroughs and Exercises for *Statistical Modeling and Inference with Python*"
 author: "Dr. Chester Ismay"
-format: html
+format:
+  html:
+    toc: true
+    toc-floating: true 
 engine: knitr
 ---
 
@@ -477,6 +480,8 @@ plt.legend(title='Decade')
 plt.tight_layout()
 plt.show();
 ```
+
+# Week 2
 
 ## Walkthrough 2.1: Kruskal-Wallis and Mann-Whitney U Tests
 
