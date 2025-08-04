@@ -5,7 +5,7 @@ format:
   html:
     toc: true
     toc-floating: true
-  # ipynb: default
+  ipynb: default
 engine: knitr
 ---
 
@@ -99,11 +99,11 @@ print(f"Predicted energy for acousticness =",
 ### Visualize the regression line
 
 ```{python}
-plt.clf();
-
 # Plotting the results
-plt.scatter(X, y, color='blue', label='Actual Data');
-plt.plot(X, y_pred, color='red', linewidth=2, label='Regression Line Prediction');
+sns.scatterplot(x=X.acousticness, y=y, color='blue', 
+                label='Actual Data');
+sns.lineplot(x=X.acousticness, y=y_pred, color='red', 
+             label='Regression Line Prediction', linewidth=2);
 plt.xlabel('Acousticness');
 plt.ylabel('Energy');
 plt.title('Actual and Predicted Energy');
@@ -117,8 +117,8 @@ plt.show();
 ```{python}
 # Check for Homoscedasticity
 residuals = y - y_pred
-plt.figure(figsize=(10, 2))
-plt.scatter(y_pred, residuals)
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x=y_pred, y=residuals, alpha=0.5)
 plt.axhline(y=0, color='r', linestyle='--')
 plt.xlabel('Predicted Values')
 plt.ylabel('Residuals')
@@ -129,7 +129,7 @@ plt.show();
 
 ```{python}
 # Check for Normality of Residuals
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 sns.histplot(residuals, kde=True)
 plt.xlabel('Residuals')
 plt.title('Histogram of Residuals')
@@ -207,9 +207,9 @@ print(f"Predicted rating for votes = ",
 
 ```{python}
 # Plotting the results
-plt.figure(figsize=(10, 2));
-plt.scatter(X, y, color='blue', label='Actual');
-plt.plot(X, y_pred, color='red', linewidth=2, label='Regression Line Prediction');
+plt.figure(figsize=(10, 7));
+sns.scatterplot(x=X.votes, y=y, color='blue', label='Actual', alpha=0.4);
+sns.lineplot(x=X.votes, y=y_pred, color='red', linewidth=2, label='Regression Line Prediction');
 plt.xlabel('Votes');
 plt.ylabel('Rating');
 plt.title('Actual vs Predicted Rating');
@@ -225,8 +225,8 @@ plt.show();
 ```{python}
 # Check for Homoscedasticity
 residuals = y - y_pred
-plt.figure(figsize=(10, 2))
-plt.scatter(y_pred, residuals)
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x=y_pred, y=residuals)
 plt.axhline(y=0, color='r', linestyle='--')
 plt.xlabel('Predicted Values')
 plt.ylabel('Residuals')
@@ -237,7 +237,7 @@ plt.show();
 
 ```{python}
 # Check for Normality of Residuals
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 sns.histplot(residuals, kde=True)
 plt.xlabel('Residuals')
 plt.title('Histogram of Residuals')
@@ -423,7 +423,7 @@ spotify_sample['predicted_prob'] = model.predict_proba(X)[:, 1]
 
 ```{python}
 # Plot the predicted probabilities
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 sns.histplot(spotify_sample['predicted_prob'], bins=20, kde=True)
 plt.title('Predicted Probabilities of High Popularity')
 plt.xlabel('Predicted Probability')
@@ -434,8 +434,8 @@ plt.show()
 
 ```{python}
 # Scatter plot: predicted probability vs actual outcome
-plt.figure(figsize=(10, 2))
-plt.scatter(spotify_sample['predicted_prob'], y, alpha=0.5)
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x=spotify_sample['predicted_prob'], y=y, alpha=0.5)
 plt.title('Predicted Probability vs Actual High Popularity')
 plt.xlabel('Predicted Probability')
 plt.ylabel('Actual (0 = Low, 1 = High)')
@@ -471,7 +471,7 @@ probs = model.predict_proba(x_vals)[:, 1]
 ```{python}
 # Plot predicted and actual energy against loudness
 plt.plot(x_vals, probs, color='red', label='Predicted Probability (S-curve)')
-plt.scatter(X, y, alpha=0.3, color='gray', label='Actual')
+sns.scatterplot(x=X.votes, y=y, alpha=0.3, color='gray', label='Actual')
 plt.title('Predicting High Rating from Votes')
 plt.xlabel('Votes')
 plt.ylabel('Probability of High Rating')
@@ -505,7 +505,7 @@ imdb_movie_sample['predicted_prob'] = model.predict_proba(X)[:, 1]
 
 ```{python}
 # Plot the predicted probabilities
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 sns.histplot(imdb_movie_sample['predicted_prob'], bins=20, kde=True)
 plt.title('Predicted Probabilities of High Rating')
 plt.xlabel('Predicted Probability')
@@ -516,8 +516,8 @@ plt.show()
 
 ```{python}
 # Scatter plot: predicted probability vs actual outcome
-plt.figure(figsize=(10, 2))
-plt.scatter(imdb_movie_sample['predicted_prob'], y, alpha=0.5)
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x=imdb_movie_sample['predicted_prob'], y=y, alpha=0.5)
 plt.title('Predicted Probability vs Actual High Rating')
 plt.xlabel('Predicted Probability')
 plt.ylabel('Actual (0 = Low, 1 = High)')
@@ -820,7 +820,7 @@ def bootstrap(data, n_bootstrap_samples=1000):
 bootstrap_means = bootstrap(spotify_sample['energy'])
 
 # Plot the distribution of bootstrap means
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.title('Distribution of Bootstrap Means for Energy')
 plt.xlabel('Mean Energy')
@@ -838,7 +838,7 @@ plt.show();
 bootstrap_means = bootstrap(imdb_movie_sample['runtime_in_minutes'])
 
 # Plot the distribution of bootstrap means
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.title('Distribution of Bootstrap Means for Runtime')
 plt.xlabel('Mean Runtime (minutes)')
@@ -867,7 +867,7 @@ print(f"95% Confidence Interval for Mean Energy: [{lower}, {upper}]")
 
 # Plot the distribution of bootstrap means and confidence interval
 bootstrap_means = [spotify_sample['energy'].sample(frac=1, replace=True).mean() for _ in range(1000)]
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(lower, color='r', linestyle='--')
 plt.axvline(upper, color='r', linestyle='--')
@@ -887,7 +887,7 @@ print(f"95% Confidence Interval for Mean Rating: [{lower}, {upper}]")
 
 # Plot the distribution of bootstrap means and confidence interval
 bootstrap_means = [imdb_movie_sample['rating'].sample(frac=1, replace=True).mean() for _ in range(1000)]
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(lower, color='r', linestyle='--')
 plt.axvline(upper, color='r', linestyle='--')
@@ -929,7 +929,7 @@ print(f"Bootstrapped Std Dev Popularity: {std_popularity}")
 
 # Plot the distribution of bootstrap means
 bootstrap_means = [spotify_sample['popularity'].sample(frac=1, replace=True).mean() for _ in range(1000)]
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(mean_popularity, color='r', linestyle='--')
 plt.title('Bootstrap Means for Popularity')
@@ -962,7 +962,7 @@ print(f"Bootstrapped Std Dev Gross Revenue: {std_gross}")
 
 # Plot the distribution of bootstrap means
 bootstrap_means = [imdb_movie_sample['gross_in_dollars'].sample(frac=1, replace=True).mean() for _ in range(1000)]
-plt.figure(figsize=(10, 2))
+plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(mean_gross, color='r', linestyle='--')
 plt.title('Bootstrap Means for Gross Revenue')
