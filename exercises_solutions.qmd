@@ -341,10 +341,22 @@ y = spotify_sample['popularity']
 # Fit the multiple regression model
 model = LinearRegression()
 model.fit(X, y)
+y_pred = model.predict(X)
 
 # Coefficients and intercept
 print("Intercept:", model.intercept_)
 print("Coefficients:", model.coef_)
+
+# Plot predicted vs. actual
+sns.scatterplot(x=y, y=y_pred, alpha=0.6)
+plt.plot([y.min(), y.max()], [y.min(), y.max()], color='red', linestyle='--', label='Perfect Fit')
+plt.xlabel('Actual Popularity')
+plt.ylabel('Predicted Popularity')
+plt.title('Predicted vs. Actual Popularity')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 ```
 
 ## Exercise 1.3: Multiple Regression
@@ -359,10 +371,22 @@ y = imdb_movie_sample['rating']
 # Fit the model
 model = LinearRegression()
 model.fit(X, y)
+y_pred = model.predict(X)
 
 # Coefficients and intercept
 print("Intercept:", model.intercept_)
 print("Coefficients:", model.coef_)
+
+# Plot predicted vs. actual
+sns.scatterplot(x=y, y=y_pred, alpha=0.6)
+plt.plot([y.min(), y.max()], [y.min(), y.max()], color='red', linestyle='--', label='Perfect Fit')
+plt.xlabel('Actual Rating')
+plt.ylabel('Predicted Rating')
+plt.title('Predicted vs. Actual Rating')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
 ```
 
 ## Walkthrough 1.4: Logistic Regression
