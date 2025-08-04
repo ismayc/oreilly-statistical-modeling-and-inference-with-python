@@ -4,7 +4,7 @@
 # Course content
 
 The major files in this repository are
-- `slides_2025-04.pdf`: PDF version of the slides used in this course to motivate the code.
+- `slides.pdf`: PDF version of the slides used in this course to motivate the code.
 - `spotify_sample.csv`: Data for code walkthroughs
 - `imdb_movie_sample.csv`: Data for student exercises.
 - `exercises.ipynb`: A Jupyter Notebook with pseudocode/instructions provide to be filled in for code walkthroughs and student exercises
