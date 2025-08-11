@@ -10,8 +10,6 @@ data/
 renv/
 renv.lock
 requirements.txt
-mc-quarto/answers_files/
-mc-quarto/answers.html
 mc-quarto/answers.qmd
 mc-quarto/convert-answers-to-quarto.R
 mc-quarto/extract-questions.R
