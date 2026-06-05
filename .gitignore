@@ -16,3 +16,8 @@ mc-quarto/extract-questions.R
 mc-quarto/main.md
 mc-quarto/md-to-quarto.R
 mc-quarto/archive/
+*.pptx
+# Annotated instructor edition (local working file, not committed)
+*with_notes*
+
+.jupyterlite.doit.db

@@ -3,32 +3,36 @@ title: "Walkthroughs and Exercises for Statistical Modeling and Inference with P
 author: "Dr. Chester Ismay"
 format:
   html:
+    theme: flatly
     toc: true
     toc-floating: true
   ipynb: default
-engine: knitr
+engine: jupyter
+execute:
+  warning: false
 ---
 
-```{r setup, include=FALSE}
-# Set global chunk options
-knitr::opts_chunk$set(
-  warning = FALSE
-)
+```{python}
+#| eval: false
+!pip install numpy pandas scipy matplotlib seaborn statsmodels scikit-learn
 ```
 
 ```{python}
+#| include: false
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 # Display all columns
 pd.set_option('display.max_columns', None)
+
+# Display all outputs from each cell
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
 
 # Turn off scientific notation
 np.set_printoptions(suppress=True)
 pd.options.display.float_format = '{:.10f}'.format
 ```
-
 
 # Week 1
 
@@ -36,7 +40,7 @@ pd.options.display.float_format = '{:.10f}'.format
 
 ### Setting Up the Python Environment
 
-If you haven't already installed Python, Jupyter, and the necessary packages, there are instructions on the course repo in the README to do so [here](https://github.com/ismayc/oreilly-fundamentals-of-statistics-with-python/blob/main/README.md). 
+If you haven't already installed Python, Jupyter, and the necessary packages, there are instructions on the course repo in the README to do so [here](https://github.com/ismayc/oreilly-statistical-modeling-and-inference-with-python/blob/main/README.md).
 
 If you aren't able to do this on your machine, you may want to check out [Google Colab](https://colab.research.google.com/). It's a free service that allows you to run Jupyter notebooks in the cloud.
 
@@ -74,9 +78,9 @@ from sklearn.linear_model import LinearRegression
 model = LinearRegression()
 model.fit(X, y)
 
-# Accousticness coefficient and intercept
+# Acousticness coefficient and intercept
 print("Intercept:", model.intercept_)
-print("Accousticness coefficient:", model.coef_)
+print("Acousticness coefficient:", model.coef_)
 ```
 
 ### Make predictions
@@ -99,9 +103,9 @@ print(f"Predicted energy for acousticness =",
 
 ```{python}
 # Plotting the results
-sns.scatterplot(x=X.acousticness, y=y, color='blue', 
+sns.scatterplot(x=X.acousticness, y=y, color='blue',
                 label='Actual Data');
-sns.lineplot(x=X.acousticness, y=y_pred, color='red', 
+sns.lineplot(x=X.acousticness, y=y_pred, color='red',
              label='Regression Line Prediction', linewidth=2);
 plt.xlabel('Acousticness');
 plt.ylabel('Energy');
@@ -112,6 +116,8 @@ plt.show();
 ```
 
 ### Check if assumptions of linear regression met with visual tools
+
+> **Common Pitfall:** Do not stop at the fitted line and its coefficient. A clear fan or funnel shape in the residuals vs predicted plot signals non-constant variance (heteroscedasticity), and a curved Q-Q plot signals non-normal residuals. Ignoring these diagnostics can make the slope estimate and any inference built on it misleading even when the line looks plausible.
 
 ```{python}
 # Check for Homoscedasticity
@@ -147,7 +153,7 @@ plt.show();
 
 ### Setting Up the Python Environment
 
-If you ran the `# Importing libraries and aliasing them` code above, you should 
+If you ran the `# Importing libraries and aliasing them` code above, you should
 be good to proceed here. If not, scroll up and run it.
 
 ### Load a dataset
@@ -280,7 +286,7 @@ plt.show();
 ```{python}
 # Plot pairplot to visualize relationships
 sns.pairplot(
-  numeric_columns[['danceability', 'energy', 'loudness', 
+  numeric_columns[['danceability', 'energy', 'loudness',
                    'valence', 'popularity']]
 );
 plt.suptitle('Pair Plot of Selected Features', y=1)
@@ -317,7 +323,7 @@ plt.show()
 ### Visualizing relationships
 
 ```{python}
-# Plot pairplot to visualize relationships of 
+# Plot pairplot to visualize relationships of
 # runtime_in_minutes, rating, votes, and gross_in_dollars
 sns.pairplot(
   numeric_columns[['runtime_in_minutes', 'rating', 'votes', 'gross_in_dollars']]
@@ -327,11 +333,12 @@ plt.tight_layout()
 plt.show();
 ```
 
-
 ## Walkthrough 1.3: Multiple Regression
 
+> **Common Pitfall:** Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret -- the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers.
+
 ```{python}
-# Prepare the data for multiple regression by choosing 
+# Prepare the data for multiple regression by choosing
 # Predictors: danceability, energy, and loudness
 # Response: popularity
 X = spotify_sample[['danceability', 'energy', 'loudness']]
@@ -364,11 +371,10 @@ plt.tight_layout()
 plt.show()
 ```
 
-
 ## Exercise 1.3: Multiple Regression
 
 ```{python}
-# Prepare the data for multiple regression by choosing 
+# Prepare the data for multiple regression by choosing
 # Predictors: runtime_in_minutes, votes, and gross_in_dollars
 # Response: rating
 X = imdb_movie_sample[['runtime_in_minutes', 'votes', 'gross_in_dollars']]
@@ -402,6 +408,8 @@ plt.show()
 ```
 
 ## Walkthrough 1.4: Logistic Regression
+
+> **Common Pitfall:** A logistic regression coefficient is a change in log-odds, not a change in probability. A positive loudness coefficient means louder tracks have higher odds of being high energy, but you cannot read the coefficient directly as "probability goes up by that amount." To talk in probabilities, use `predict_proba`, and remember the same one-unit change shifts probability differently depending on where you are on the S-curve.
 
 ### Logistic Regression with a Single Predictor
 
@@ -480,13 +488,12 @@ plt.tight_layout()
 plt.show()
 ```
 
-
 ## Exercise 1.4: Logistic Regression
 
 ### Logistic Regression with a Single Predictor
 
 ```{python}
-# Define votes predictor and 
+# Define votes predictor and
 # binary rating response (rating > 7 -> high rating)
 X = imdb_movie_sample[['votes']]
 y = (imdb_movie_sample['rating'] > 7).astype(int)
@@ -518,11 +525,10 @@ plt.tight_layout()
 plt.show()
 ```
 
-
 ### Logistic Regression with Multiple Predictors
 
 ```{python}
-# Define predictors (runtime_in_minutes and votes) and 
+# Define predictors (runtime_in_minutes and votes) and
 # binary rating response (rating > 7 -> high rating)
 X = imdb_movie_sample[['runtime_in_minutes', 'votes']]
 y = (imdb_movie_sample['rating'] > 7).astype(int)
@@ -668,7 +674,7 @@ anova_table
 # Some customization here to get the decades to appear in the appropriate order
 
 # Define the ordered categories
-decades = ['1940s', '1950s', '1960s', '1970s', '1980s', '1990s', 
+decades = ['1940s', '1950s', '1960s', '1970s', '1980s', '1990s',
            '2000s', '2010s', '2020s']
 
 # Convert 'decade' column to a categorical type with ordered categories
@@ -686,6 +692,18 @@ plt.tight_layout()
 plt.show();
 ```
 
+### Self-Check
+
+By the end of this week, you should be able to:
+
+- [ ] Fit a simple linear regression with scikit-learn and interpret the intercept and slope in the units of the data.
+- [ ] Use a fitted model to predict a response for a new feature value, and recognize when a prediction would be an unsafe extrapolation.
+- [ ] Build and read a correlation matrix and pairplot to spot relationships and possible multicollinearity among predictors.
+- [ ] Fit a multiple linear regression and explain each coefficient as the effect of one predictor holding the others fixed.
+- [ ] Check the homoscedasticity and normality-of-residuals assumptions using residual plots, histograms, and Q-Q plots.
+- [ ] Fit a logistic regression, interpret its coefficients on the log-odds scale, and obtain predicted probabilities.
+- [ ] Run one-way and two-way ANOVA to compare a numeric outcome across categorical groups and visualize the groups with boxplots.
+
 # Week 2
 
 ## Walkthrough 2.1: Kruskal-Wallis and Mann-Whitney U Tests
@@ -696,7 +714,7 @@ plt.show();
 import scipy.stats as stats
 
 # Perform Kruskal-Wallis Test on 'danceability' grouped by 'track_genre'
-grouped_data = [group["danceability"].values 
+grouped_data = [group["danceability"].values
     for name, group in spotify_sample.groupby("track_genre")]
 stat, p_value = stats.kruskal(*grouped_data)
 print(f"Kruskal-Wallis Test Statistic: {stat}")
@@ -720,7 +738,7 @@ print(f"P-value: {p_value}")
 
 ```{python}
 # Perform Kruskal-Wallis Test on 'rating' grouped by 'decade'
-grouped_data = [group["rating"].values 
+grouped_data = [group["rating"].values
                   for name, group in imdb_movie_sample.groupby("decade")]
 stat, p_value = stats.kruskal(*grouped_data)
 print(f"Kruskal-Wallis Test Statistic: {stat}")
@@ -742,6 +760,8 @@ print(f"P-value: {p_value}")
 
 ## Walkthrough 2.2: Correlation and Regression Non-parametrics
 
+> **Common Pitfall:** A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation -- a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.
+
 ### Spearman's Rank Correlation
 
 ```{python}
@@ -757,7 +777,7 @@ spearman_corr
 
 # Heatmap for Spearman's rank correlation matrix
 plt.figure(figsize=(10, 8))
-sns.heatmap(spearman_corr, annot=True, cmap='coolwarm', 
+sns.heatmap(spearman_corr, annot=True, cmap='coolwarm',
             linewidths=0.5, fmt=".2f")
 plt.title('Spearman Rank Correlation Matrix')
 plt.tight_layout()
@@ -773,7 +793,7 @@ kendall_corr
 
 # Heatmap for Kendall's tau correlation matrix
 plt.figure(figsize=(10, 8))
-sns.heatmap(kendall_corr, annot=True, cmap='coolwarm', 
+sns.heatmap(kendall_corr, annot=True, cmap='coolwarm',
             linewidths=0.5, fmt=".2f")
 plt.title('Kendall Tau Correlation Matrix')
 plt.tight_layout()
@@ -783,7 +803,7 @@ plt.show();
 ### Theil-Sen Robust Regression
 
 ```{python}
-# Theil-Sen robust regression for 'danceability' and 'energy' 
+# Theil-Sen robust regression for 'danceability' and 'energy'
 # predicting 'popularity'
 X = numeric_columns[['danceability', 'energy']]
 y = numeric_columns['popularity']
@@ -792,7 +812,6 @@ theil_sen.fit(X, y)
 print("Intercept:", theil_sen.intercept_)
 print("Coefficients:", theil_sen.coef_)
 ```
-
 
 ## Exercise 2.2: Correlation and Regression Non-parametrics
 
@@ -865,7 +884,6 @@ plt.tight_layout()
 plt.show();
 ```
 
-
 ## Exercise 2.3: Bootstrapping
 
 ```{python}
@@ -883,8 +901,9 @@ plt.tight_layout()
 plt.show();
 ```
 
-
 ## Walkthrough 2.4: Confidence Intervals
+
+> **Common Pitfall:** A 95% bootstrap confidence interval is a statement about the population mean, not about individual observations, and it does not mean "95% of the data fall in this range." It means the procedure captures the true mean about 95% of the time across repeated samples. Widen your sample or increase the number of resamples for a more stable interval rather than reading too much into one narrow result.
 
 ```{python}
 # Function to calculate bootstrap confidence intervals
@@ -934,7 +953,6 @@ plt.tight_layout()
 plt.show();
 ```
 
-
 ## Walkthrough 2.5: Real-World Scenarios for Bootstrapping
 
 **Music Industry Analytics**
@@ -975,7 +993,6 @@ plt.tight_layout()
 plt.show();
 ```
 
-
 ## Exercise 2.5: Real-World Scenarios for Bootstrapping
 
 **Film Industry Insights**
@@ -1008,3 +1025,13 @@ plt.tight_layout()
 plt.show();
 ```
 
+### Self-Check
+
+By the end of this week, you should be able to:
+
+- [ ] Choose and run the Kruskal-Wallis and Mann-Whitney U tests as non-parametric alternatives when ANOVA or t-test assumptions are in doubt.
+- [ ] Compute Spearman and Kendall rank correlations and explain when they are preferable to Pearson correlation.
+- [ ] Fit a Theil-Sen robust regression and describe why it resists the influence of outliers.
+- [ ] Write a bootstrap procedure that resamples with replacement to build a sampling distribution of a statistic.
+- [ ] Construct and correctly interpret a bootstrap confidence interval for a population mean.
+- [ ] Apply bootstrapping to a real-world scenario to estimate a mean and quantify its variability.
