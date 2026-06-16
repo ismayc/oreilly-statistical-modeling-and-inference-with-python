@@ -3,7 +3,7 @@
 
 ## Run this course online — nothing to install
 
-**▶️ Course page: <https://ismay-oreilly-smi.netlify.app/app/>**
+**▶️ Course page: <https://ismay-oreilly-smi.netlify.app/>**
 
 Run every walkthrough and exercise right in your web browser from the course page
 above — choose **Quarto Live** (a guided page with runnable code cells) or
@@ -28,12 +28,6 @@ The major files in this repository are
 - `exercises_solutions.ipynb`: A Jupyter Notebook with answers to the code walkthroughs and exercises. 
 
 ## Recommended instructions on getting set up with Python and Jupyter Notebook
-
-If you aren't able to do this on your machine, you may want to check out [Google Colab](https://colab.research.google.com/github/ismayc/oreilly-statistical-modeling-and-inference-with-python/blob/main/exercises.ipynb). 
-It's a free service that allows you to run Jupyter notebooks in the cloud. 
-Alternatively, I've set up some temporary notebooks on Binder
-[here](https://mybinder.org/v2/gh/ismayc/oreilly-statistical-modeling-and-inference-with-python/HEAD?urlpath=%2Fdoc%2Ftree%2Fexercises.ipynb) 
-that you can work with online as well.
 
 ### Step 1: Install Python
 - **Option 1: Anaconda Installation**:
