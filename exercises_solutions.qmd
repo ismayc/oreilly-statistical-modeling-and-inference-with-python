@@ -40,10 +40,6 @@ import numpy as np
 # Display all columns
 pd.set_option('display.max_columns', None)
 
-# Display all outputs from each cell
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
 # Turn off scientific notation
 np.set_printoptions(suppress=True)
 pd.options.display.float_format = '{:.10f}'.format
