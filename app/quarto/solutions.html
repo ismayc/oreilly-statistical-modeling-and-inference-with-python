@@ -595,7 +595,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBQbG90IHBhaXJwbG90IHRv
 <section id="walkthrough-1.3-multiple-regression" class="level2">
 <h2 class="anchored" data-anchor-id="walkthrough-1.3-multiple-regression">Walkthrough 1.3: Multiple Regression</h2>
 <blockquote class="blockquote">
-<p><strong>Common Pitfall:</strong> Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret – the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers.</p>
+<p><strong>Common Pitfall:</strong> Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret: the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers.</p>
 </blockquote>
 <div>
 <div id="pyodide-30" class="exercise-cell">
@@ -1009,7 +1009,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBQZXJmb3JtIE1hbm4tV2hp
 <section id="walkthrough-2.2-correlation-and-regression-non-parametrics" class="level2">
 <h2 class="anchored" data-anchor-id="walkthrough-2.2-correlation-and-regression-non-parametrics">Walkthrough 2.2: Correlation and Regression Non-parametrics</h2>
 <blockquote class="blockquote">
-<p><strong>Common Pitfall:</strong> A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation – a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.</p>
+<p><strong>Common Pitfall:</strong> A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation, a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.</p>
 </blockquote>
 <section id="spearmans-rank-correlation" class="level3">
 <h3 class="anchored" data-anchor-id="spearmans-rank-correlation">Spearman’s Rank Correlation</h3>

@@ -46,7 +46,7 @@
     "href": "solutions.html#walkthrough-1.3-multiple-regression",
     "title": "Solutions: Statistical Modeling and Inference with Python",
     "section": "Walkthrough 1.3: Multiple Regression",
-    "text": "Walkthrough 1.3: Multiple Regression\n\nCommon Pitfall: Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret – the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers."
+    "text": "Walkthrough 1.3: Multiple Regression\n\nCommon Pitfall: Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret: the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers."
   },
   {
     "objectID": "solutions.html#exercise-1.3-multiple-regression",
@@ -102,7 +102,7 @@
     "href": "solutions.html#walkthrough-2.2-correlation-and-regression-non-parametrics",
     "title": "Solutions: Statistical Modeling and Inference with Python",
     "section": "Walkthrough 2.2: Correlation and Regression Non-parametrics",
-    "text": "Walkthrough 2.2: Correlation and Regression Non-parametrics\n\nCommon Pitfall: A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation – a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.\n\n\nSpearman’s Rank Correlation\n\n\n\n\n\n\n\n\nKendall’s Tau Correlation\n\n\n\n\n\n\n\n\nTheil-Sen Robust Regression"
+    "text": "Walkthrough 2.2: Correlation and Regression Non-parametrics\n\nCommon Pitfall: A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation, a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.\n\n\nSpearman’s Rank Correlation\n\n\n\n\n\n\n\n\nKendall’s Tau Correlation\n\n\n\n\n\n\n\n\nTheil-Sen Robust Regression"
   },
   {
     "objectID": "solutions.html#exercise-2.2-correlation-and-regression-non-parametrics",
@@ -221,7 +221,7 @@
     "href": "exercises.html#walkthrough-1.3-multiple-regression",
     "title": "Walkthroughs & Exercises: Statistical Modeling and Inference with Python",
     "section": "Walkthrough 1.3: Multiple Regression",
-    "text": "Walkthrough 1.3: Multiple Regression\n\nCommon Pitfall: Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret – the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers."
+    "text": "Walkthrough 1.3: Multiple Regression\n\nCommon Pitfall: Each coefficient in a multiple regression is the effect of that predictor holding the others fixed, not its standalone effect. When predictors are correlated with one another (multicollinearity), individual coefficients can become unstable and hard to interpret: the sign can even flip relative to the simple one-predictor model. Always report coefficients with their units and context rather than as bare numbers."
   },
   {
     "objectID": "exercises.html#exercise-1.3-multiple-regression",
@@ -277,7 +277,7 @@
     "href": "exercises.html#walkthrough-2.2-correlation-and-regression-non-parametrics",
     "title": "Walkthroughs & Exercises: Statistical Modeling and Inference with Python",
     "section": "Walkthrough 2.2: Correlation and Regression Non-parametrics",
-    "text": "Walkthrough 2.2: Correlation and Regression Non-parametrics\n\nCommon Pitfall: A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation – a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.\n\n\nSpearman’s Rank Correlation\n\n\n\n\n\n\n\n\nKendall’s Tau Correlation\n\n\n\n\n\n\n\n\nTheil-Sen Robust Regression"
+    "text": "Walkthrough 2.2: Correlation and Regression Non-parametrics\n\nCommon Pitfall: A strong Spearman or Kendall correlation tells you two variables move together in rank, not that one causes the other. Correlation is not causation, a third variable or the direction of the relationship can easily be the real story. Use these rank-based measures (and Theil-Sen) when relationships are monotonic but not necessarily linear or when outliers would distort Pearson correlation.\n\n\nSpearman’s Rank Correlation\n\n\n\n\n\n\n\n\nKendall’s Tau Correlation\n\n\n\n\n\n\n\n\nTheil-Sen Robust Regression"
   },
   {
     "objectID": "exercises.html#exercise-2.2-correlation-and-regression-non-parametrics",
