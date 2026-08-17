@@ -816,7 +816,7 @@ plt.show();
 # predicting 'popularity'
 X = numeric_columns[['danceability', 'energy']]
 y = numeric_columns['popularity']
-theil_sen = TheilSenRegressor()
+theil_sen = TheilSenRegressor(random_state=2025)
 theil_sen.fit(X, y)
 print("Intercept:", theil_sen.intercept_)
 print("Coefficients:", theil_sen.coef_)
@@ -863,7 +863,7 @@ plt.show();
 # Theil-Sen robust regression for 'votes' and 'runtime_in_minutes' predicting 'rating'
 X = numeric_columns[['votes', 'runtime_in_minutes']]
 y = numeric_columns['rating']
-theil_sen = TheilSenRegressor()
+theil_sen = TheilSenRegressor(random_state=2025)
 theil_sen.fit(X, y)
 print("Intercept:", theil_sen.intercept_)
 print("Coefficients:", theil_sen.coef_)
@@ -872,6 +872,10 @@ print("Coefficients:", theil_sen.coef_)
 ## Walkthrough 2.3: Bootstrapping
 
 ```{python}
+# Seed once so the resampling below is reproducible; each resample
+# still differs, but the sequence is the same on every run
+np.random.seed(2025)
+
 # Function to perform bootstrapping
 def bootstrap(data, n_bootstrap_samples=1000):
     bootstrap_samples = []
