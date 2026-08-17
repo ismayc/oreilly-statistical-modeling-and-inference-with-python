@@ -872,10 +872,6 @@ print("Coefficients:", theil_sen.coef_)
 ## Walkthrough 2.3: Bootstrapping
 
 ```{python}
-# Seed once so the resampling below is reproducible; each resample
-# still differs, but the sequence is the same on every run
-np.random.seed(2025)
-
 # Function to perform bootstrapping
 def bootstrap(data, n_bootstrap_samples=1000):
     bootstrap_samples = []
