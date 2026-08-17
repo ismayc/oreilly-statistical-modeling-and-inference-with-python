@@ -873,10 +873,11 @@ print("Coefficients:", theil_sen.coef_)
 
 ```{python}
 # Function to perform bootstrapping
-def bootstrap(data, n_bootstrap_samples=1000):
+def bootstrap(data, n_bootstrap_samples=1000, seed=2025):
+    rng = np.random.default_rng(seed)
     bootstrap_samples = []
     for _ in range(n_bootstrap_samples):
-        resample = data.sample(frac=1, replace=True)
+        resample = data.sample(frac=1, replace=True, random_state=rng)
         bootstrap_samples.append(resample.mean())
     return bootstrap_samples
 
@@ -916,10 +917,12 @@ plt.show();
 
 ```{python}
 # Function to calculate bootstrap confidence intervals
-def bootstrap_confidence_interval(data, n_bootstrap_samples=1000, confidence_level=0.95):
+def bootstrap_confidence_interval(data, n_bootstrap_samples=1000, confidence_level=0.95,
+                                  seed=2025):
+    rng = np.random.default_rng(seed)
     bootstrap_samples = []
     for _ in range(n_bootstrap_samples):
-        resample = data.sample(frac=1, replace=True)
+        resample = data.sample(frac=1, replace=True, random_state=rng)
         bootstrap_samples.append(resample.mean())
     lower_bound = np.percentile(bootstrap_samples, (1 - confidence_level) / 2 * 100)
     upper_bound = np.percentile(bootstrap_samples, (1 + confidence_level) / 2 * 100)
@@ -930,7 +933,8 @@ lower, upper = bootstrap_confidence_interval(spotify_sample['energy'])
 print(f"95% Confidence Interval for Mean Energy: [{lower}, {upper}]")
 
 # Plot the distribution of bootstrap means and confidence interval
-bootstrap_means = [spotify_sample['energy'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+rng = np.random.default_rng(2025)
+bootstrap_means = [spotify_sample['energy'].sample(frac=1, replace=True, random_state=rng).mean() for _ in range(1000)]
 plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(lower, color='r', linestyle='--')
@@ -950,7 +954,8 @@ lower, upper = bootstrap_confidence_interval(imdb_movie_sample['rating'])
 print(f"95% Confidence Interval for Mean Rating: [{lower}, {upper}]")
 
 # Plot the distribution of bootstrap means and confidence interval
-bootstrap_means = [imdb_movie_sample['rating'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+rng = np.random.default_rng(2025)
+bootstrap_means = [imdb_movie_sample['rating'].sample(frac=1, replace=True, random_state=rng).mean() for _ in range(1000)]
 plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(lower, color='r', linestyle='--')
@@ -979,10 +984,11 @@ plt.show();
 # Calculate bootstrap statistics for the 'popularity' column
 
 # Function to calculate bootstrap statistics
-def bootstrap_statistics(data, n_bootstrap_samples=1000):
+def bootstrap_statistics(data, n_bootstrap_samples=1000, seed=2025):
+    rng = np.random.default_rng(seed)
     bootstrap_means = []
     for _ in range(n_bootstrap_samples):
-        resample = data.sample(frac=1, replace=True)
+        resample = data.sample(frac=1, replace=True, random_state=rng)
         bootstrap_means.append(resample.mean())
     return np.mean(bootstrap_means), np.std(bootstrap_means)
 
@@ -991,7 +997,8 @@ print(f"Bootstrapped Mean Popularity: {mean_popularity}")
 print(f"Bootstrapped Std Dev Popularity: {std_popularity}")
 
 # Plot the distribution of bootstrap means
-bootstrap_means = [spotify_sample['popularity'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+rng = np.random.default_rng(2025)
+bootstrap_means = [spotify_sample['popularity'].sample(frac=1, replace=True, random_state=rng).mean() for _ in range(1000)]
 plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(mean_popularity, color='r', linestyle='--')
@@ -1023,7 +1030,8 @@ print(f"Bootstrapped Mean Gross Revenue: {mean_gross}")
 print(f"Bootstrapped Std Dev Gross Revenue: {std_gross}")
 
 # Plot the distribution of bootstrap means
-bootstrap_means = [imdb_movie_sample['gross_in_dollars'].sample(frac=1, replace=True).mean() for _ in range(1000)]
+rng = np.random.default_rng(2025)
+bootstrap_means = [imdb_movie_sample['gross_in_dollars'].sample(frac=1, replace=True, random_state=rng).mean() for _ in range(1000)]
 plt.figure(figsize=(10, 5))
 plt.hist(bootstrap_means, bins=30, edgecolor='k', alpha=0.7)
 plt.axvline(mean_gross, color='r', linestyle='--')
